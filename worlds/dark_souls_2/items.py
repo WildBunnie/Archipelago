@@ -1,11 +1,11 @@
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict
+from typing import Dict, Set
 
 from BaseClasses import ItemClassification
 
-from .enums import DS2Version, ItemCategory
+from .enums import APItemType, DS2Version, ItemCategory
 
 VANILLA = DS2Version.VANILLA
 SOTFS = DS2Version.SOTFS
@@ -24,6 +24,9 @@ class ItemData:
 
     classification: ItemClassification = ItemClassification.filler
     """How important this item is to the game progression."""
+
+    item_type: APItemType = APItemType.ITEM
+    """TODO"""
 
     version: DS2Version = None
     """The version that this item is part of."""
@@ -53,25 +56,33 @@ class ItemData:
         if re.search(r' x\d+$', self.name):
             self.bundle = True
 
+        # TODO maybe make it require to be put in the item data
+        if self.category == ItemCategory.STATUE:
+            self.item_type = APItemType.EVENT
+        else:
+            self.item_type = APItemType.ITEM
+
 
 item_list: list[ItemData] = [
-    ItemData(1,        "Unpetrify Statue in Things Betwixt",                  ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(2,        "Unpetrify Rosabeth of Melfia",                        ItemCategory.STATUE, classification=ItemClassification.progression),
-    ItemData(3,        "Unpetrify Statue in Heide's Tower of Flame",          ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(4,        "Unpetrify Statue in Lost Bastille",                   ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(5,        "Unpetrify Straid of Olaphis",                         ItemCategory.STATUE, classification=ItemClassification.progression),
-    ItemData(6,        "Unpetrify Statue in Black Gulch",                     ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(7,        "Unpetrify Statue near Manscorpion Tark",              ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(8,        "Unpetrify Statue near Black Knight Halberd",          ItemCategory.STATUE, classification=ItemClassification.progression),
-    ItemData(9,        "Unpetrify Statue Blocking the Chest in Shaded Ruins", ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(10,       "Unpetrify Lion Mage Set Statue in Shaded Ruins",      ItemCategory.STATUE, classification=ItemClassification.progression),
-    ItemData(11,       "Unpetrify Fang Key Statue in Shaded Ruins",           ItemCategory.STATUE, classification=ItemClassification.progression),
-    ItemData(12,       "Unpetrify Warlock Mask Statue in Shaded Ruins",       ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(13,       "Unpetrify Milfanito Entrance Statue",                 ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(14,       "Unpetrify Cyclops Statue in Aldia's Keep",            ItemCategory.STATUE, classification=ItemClassification.progression),
-    ItemData(15,       "Unpetrify Left Cage Statue in Aldia's Keep",          ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(16,       "Unpetrify Right Cage Statue in Aldia's Keep",         ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(17,       "Unpetrify Statue in Dragon Aerie",                    ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    # 100972 able to fight nashandra
+    ItemData(102640,    "Unpetrify Rosabeth of Melfia",                        ItemCategory.STATUE, classification=ItemClassification.progression),
+    ItemData(102741,    "Unpetrify Straid of Olaphis",                         ItemCategory.STATUE, classification=ItemClassification.progression),
+    ItemData(102000050, "Unpetrify Statue in Things Betwixt",                  ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    ItemData(116000031, "Unpetrify Statue in Lost Bastille",                   ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    ItemData(115000050, "Unpetrify Cyclops Statue in Aldia's Keep",            ItemCategory.STATUE),
+    ItemData(115000051, "Unpetrify Left Cage Statue in Aldia's Keep",          ItemCategory.STATUE, version=SOTFS),
+    ItemData(115000052, "Unpetrify Right Cage Statue in Aldia's Keep",         ItemCategory.STATUE, version=SOTFS),
+    ItemData(125000027, "Unpetrify Statue in Black Gulch",                     ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    ItemData(127000030, "Unpetrify Statue in Dragon Aerie",                    ItemCategory.STATUE, version=SOTFS),
+    ItemData(130000010, "Unpetrify Statue in Heide's Tower of Flame",          ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    ItemData(132000010, "Unpetrify Statue near Black Knight Halberd",          ItemCategory.STATUE, classification=ItemClassification.progression),
+    ItemData(132000012, "Unpetrify Lion Mage Set Statue in Shaded Ruins",      ItemCategory.STATUE, classification=ItemClassification.progression),
+    ItemData(132000014, "Unpetrify Fang Key Statue in Shaded Ruins",           ItemCategory.STATUE, classification=ItemClassification.progression),
+    ItemData(132000016, "Unpetrify Statue near Manscorpion Tark",              ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    ItemData(132000017, "Unpetrify Warlock Mask Statue in Shaded Ruins",       ItemCategory.STATUE, version=SOTFS),
+    ItemData(132000018, "Unpetrify Statue Blocking the Chest in Shaded Ruins", ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
+    ItemData(211000030, "Unpetrify Milfanito Entrance Statue",                 ItemCategory.STATUE, version=SOTFS),
+    
     ItemData(1000000,  "Dagger",                                              ItemCategory.MELEE_WEAPON, max_reinforcement=10),
     ItemData(1010000,  "Bandit's Knife",                                      ItemCategory.MELEE_WEAPON, max_reinforcement=10),
     ItemData(1040000,  "Mytha's Bent Blade",                                  ItemCategory.MELEE_WEAPON, max_reinforcement=5),
@@ -1092,7 +1103,7 @@ item_list: list[ItemData] = [
     ItemData(50920000, "Soul of a Giant x5",                                  ItemCategory.GOOD, classification=ItemClassification.progression),
     ItemData(50930000, "Tseldora Den Key",                                    ItemCategory.UNIQUE, classification=ItemClassification.progression),
     ItemData(50940000, "Champion's Tablet",                                   ItemCategory.UNIQUE, skip=True),
-    ItemData(50950000, "Ladder Miniature",                                    ItemCategory.UNIQUE, classification=ItemClassification.progression),
+    ItemData(50950000, "Ladder Miniature",                                    ItemCategory.UNIQUE),
     ItemData(50960000, "Soul Vessel",                                         ItemCategory.GOOD),
     ItemData(50960002, "Soul Vessel x2",                                      ItemCategory.GOOD),
     ItemData(50970000, "Undead Lockaway Key",                                 ItemCategory.UNIQUE, classification=ItemClassification.progression),
@@ -1185,7 +1196,7 @@ item_list: list[ItemData] = [
     ItemData(60151005, "Human Effigy x5",                                     ItemCategory.GOOD, classification=ItemClassification.useful),
     ItemData(60151006, "Human Effigy x6",                                     ItemCategory.GOOD, classification=ItemClassification.useful),
     ItemData(60151013, "Human Effigy x13",                                    ItemCategory.GOOD, classification=ItemClassification.useful),
-    ItemData(60155000, "Estus Flask",                                         ItemCategory.UNIQUE, classification=ItemClassification.progression),
+    ItemData(60155000, "Estus Flask",                                         ItemCategory.UNIQUE),
     ItemData(60160000, "Small Blue Burr",                                     ItemCategory.GOOD),
     ItemData(60160005, "Small Blue Burr x5",                                  ItemCategory.GOOD),
     ItemData(60170000, "Small Yellow Burr",                                   ItemCategory.GOOD),
@@ -1463,7 +1474,7 @@ item_list: list[ItemData] = [
     ItemData(62060003, "Cracked Red Eye Orb x3",                              ItemCategory.GOOD, skip=True),
     ItemData(62060005, "Cracked Red Eye Orb x5",                              ItemCategory.GOOD, skip=True),
     ItemData(62070000, "Dragon Eye",                                          ItemCategory.UNIQUE, skip=True),
-    ItemData(62100000, "Token of Fidelity",                                   ItemCategory.GOOD, classification=ItemClassification.progression),
+    ItemData(62100000, "Token of Fidelity",                                   ItemCategory.GOOD),
     ItemData(62110000, "Token of Spite",                                      ItemCategory.GOOD, classification=ItemClassification.progression),
     ItemData(62120000, "Sunlight Medal",                                      ItemCategory.GOOD, skip=True),
     ItemData(62130000, "Dragon Scale",                                        ItemCategory.GOOD, skip=True),
@@ -1540,3 +1551,20 @@ item_list: list[ItemData] = [
 ]
 
 item_dictionary: Dict[str, ItemData] = {item.name: item for item in item_list}
+
+item_name_groups: Dict[str, Set[str]] = {
+    "Pharros' Lockstone": { "Master Lockstone" },
+    "Smelter Wedge": { "Smelter Wedge x11" },
+    "Soul of a Giant": { "Soul of a Giant x5" },
+    "Fragrant Branch of Yore": { item.name for item in item_list if item.category == ItemCategory.STATUE },
+    "Progression": { item.name for item in item_list if item.classification == ItemClassification.progression },
+    "Useful": { item.name for item in item_list if item.classification == ItemClassification.useful }
+}
+
+for item in item_list:
+    if item.exclude: continue
+    category_name = item.category.value
+    if category_name not in item_name_groups:
+        item_name_groups[category_name] = {item.name}
+    else:
+        item_name_groups[category_name].add(item.name)

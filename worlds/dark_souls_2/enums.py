@@ -6,10 +6,15 @@ class DS2Version(Enum):
     VANILLA = "vanilla"
 
 
-class LocationType(Enum):
+class APLocationType(Enum):
     ItemLotParam2_Chr = 100_000_000
     ItemLotParam2_Other = 200_000_000
     ShopLineupParam = 300_000_000
+
+
+class APItemType(Enum):
+    ITEM = 1
+    EVENT = 2
 
 
 class ItemCategory(Enum):

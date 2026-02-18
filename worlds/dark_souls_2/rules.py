@@ -59,17 +59,19 @@ connection_rules: List[RuleData] = [
     RuleData("The Lost Bastille - After Key -> The Lost Bastille - Late", "Master Lockstone", version=DS2Version.VANILLA),
     RuleData("The Lost Bastille - Early -> The Lost Bastille - After Statue", "Unpetrify Statue in Lost Bastille", version=DS2Version.SOTFS),
 
-    RuleData("Iron Keep -> Belfry Sol",  "Master Lockstone"),
-    RuleData("Iron Keep -> Brume Tower", "Heavy Iron Key", version=DS2Version.SOTFS),
+    RuleData("Huntsman's Copse -> Harvest Valley",  "Undead Lockaway Key"),
 
-    RuleData("Black Gulch -> Shulva, Sanctum City", "Dragon Talon", version=DS2Version.SOTFS),
+    RuleData("Iron Keep -> Belfry Sol",  "Master Lockstone"),
+    RuleData("Iron Keep -> Brume Tower", "Heavy Iron Key"),
+
+    RuleData("Black Gulch -> Shulva, Sanctum City", "Dragon Talon"),
 
     RuleData("Shaded Woods -> Aldia's Keep", "King's Ring"),
     RuleData("Shaded Woods -> Drangleic Castle", "Open Shrine of Winter"),
 
     RuleData("Drangleic Castle -> Shrine of Amana", "Key to King's Passage"),
     RuleData("Drangleic Castle -> Throne of Want", "King's Ring"),
-    RuleData("Drangleic Castle -> Frozen Eleum Loyce", "Frozen Flower", version=DS2Version.SOTFS),
+    RuleData("Drangleic Castle -> Frozen Eleum Loyce", "Frozen Flower"),
 
     RuleData("Shulva, Sanctum City -> Cave of The Dead", "Eternal Sanctum Key"),
     RuleData("Dragon's Sanctum -> Dragon's Sanctum - Dragon Stone", "Dragon Stone"),
@@ -78,6 +80,8 @@ connection_rules: List[RuleData] = [
     RuleData("Brume Tower - Scepter -> Iron Passage", "Tower Key"),
     RuleData("Brume Tower - Scepter -> Memory of the Old Iron King", "Tower Key"),
     RuleData("Brume Tower - Scepter -> Memory of the Old Iron King", "Ashen Mist Heart"),
+
+    RuleData("Frozen Eleum Loyce -> Frigid Outskirts", "Garrison Ward Key"),
 ]
 
 location_rules: List[RuleData] = [
@@ -149,6 +153,7 @@ location_rules: List[RuleData] = [
     # Forest of Fallen Giants - Soldier Key
     # Frigid Outskirts
     # Frozen Eleum Loyce
+    RuleData("EleumLoyce: Soul of Aava, the King's Pet", "Eye of the Priestess"),
     # Grave of Saints
     RuleData("GraveOfSaints: Whisper of Despair - after bridge, second floor", "Master Lockstone"),
     RuleData("GraveOfSaints: Torch - after bridge, second floor", "Master Lockstone"),
@@ -218,7 +223,13 @@ location_rules: List[RuleData] = [
     RuleData("ShadedWoods: Lion Mage Skirt - metal chest blocked by statue near boss path", "Unpetrify Lion Mage Set Statue in Shaded Ruins"),
     RuleData("ShadedWoods: Human Effigy x3 - statue-blocked metal chest, left from bonfire bridge", "Unpetrify Statue Blocking the Chest in Shaded Ruins", version=DS2Version.SOTFS),
     RuleData("ShadedWoods: Bleeding Serum x3 - statue-blocked metal chest, left from bonfire bridge", "Unpetrify Statue Blocking the Chest in Shaded Ruins", version=DS2Version.SOTFS),
-    # Shaded Woods 
+    RuleData("ShadedWoods: Estus Flask Shard - room where Ornifex is locked", "Fang Key", version=DS2Version.VANILLA),
+    RuleData("ShadedWoods: Fragrant Branch of Yore - room where Ornifex is locked", "Fang Key", version=DS2Version.SOTFS),
+    RuleData("ShadedWoods: Fang Key - petrified enemy by Shaded Ruins bonfire, drop", "Unpetrify Fang Key Statue in Shaded Ruins"),
+    RuleData("ShadedWoods: Torch - passage past Manscorpion Tark", ["Unpetrify Statue near Manscorpion Tark", "Unpetrify Statue near Black Knight Halberd"]),
+    RuleData("ShadedWoods: Sublime Bone Dust - ruined building near statue, jump out window by bonfire", ["Unpetrify Statue near Manscorpion Tark", "Unpetrify Statue near Black Knight Halberd"], version=DS2Version.SOTFS),
+    RuleData("ShadedWoods: Soul of a Brave Warrior - ruined building near statue, jump out window by bonfire", ["Unpetrify Statue near Manscorpion Tark", "Unpetrify Statue near Black Knight Halberd"]),
+    RuleData("ShadedWoods: Twilight Herb - ruined building near statue, jump out window by bonfire", ["Unpetrify Statue near Manscorpion Tark", "Unpetrify Statue near Black Knight Halberd"]),
     # Shrine of Amana
     RuleData("Amana: King's Crown - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
     RuleData("Amana: King's Armor - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
@@ -230,6 +241,11 @@ location_rules: List[RuleData] = [
     RuleData("SinnersRise: Fire Seed - locked upper left cell", "Bastille Key"),
     RuleData("SinnersRise: Smooth & Silky Stone - before boss, right side locked room", "Bastille Key"),
     # The Gutter
+    RuleData("Gutter: Havel's Greatshield - urn behind forgotten door", "Forgotten Key"),
+    RuleData("Gutter: Havel's Helm - urn behind forgotten door", "Forgotten Key"),
+    RuleData("Gutter: Havel's Armor - urn behind forgotten door", "Forgotten Key"),
+    RuleData("Gutter: Havel's Gauntlets - urn behind forgotten door", "Forgotten Key"),
+    RuleData("Gutter: Havel's Leggings - urn behind forgotten door", "Forgotten Key"),
     # The Lost Bastille
     RuleData("Bastille: Soul Vessel - behind Pharros' contraption, Pharros/elevator room, chest", "Master Lockstone"),
     RuleData("Bastille: Petrified Dragon Bone - Straid's neighboring cell", "Bastille Key"),
@@ -260,6 +276,11 @@ location_rules: List[RuleData] = [
     RuleData("Bastille: Lingering Dragoncrest Ring - Straid shop", "Unpetrify Straid of Olaphis"),
     RuleData("Bastille: Agape Ring - Straid shop", "Unpetrify Straid of Olaphis"),
     # The Pit
+    RuleData("Pit: Soul Vortex - forgotten door, chest", "Forgotten Key"),
+    RuleData("Pit: Great Lightning Spear - forgotten door, chest", "Forgotten Key"),
+    RuleData("Pit: Witchtree Branch - forgotten door, chest", "Forgotten Key"),
+    RuleData("Pit: Witchtree Bellvine - forgotten door, chest", "Forgotten Key"),
+    RuleData("Pit: Dragon Talon - forgotten door", "Forgotten Key", version=DS2Version.SOTFS),
     # Things Betwixt
     RuleData("Betwixt: Estus Flask Shard - pit behind petrified statue", "Unpetrify Statue in Things Betwixt", version=DS2Version.SOTFS),
     RuleData("Betwixt: Twinkling Titanite - by coffin, enemy drop", "Unpetrify Statue in Things Betwixt", version=DS2Version.SOTFS),
@@ -305,5 +326,4 @@ location_rules: List[RuleData] = [
     RuleData("Chariot: Fire Whip - Gren shop", "Token of Spite"),
     RuleData("Chariot: Delicate String - Gren shop", "Token of Spite"),
     RuleData("Chariot: Red Sign Soapstone - Gren shop", "Token of Spite"),
-    # Undefined
 ]

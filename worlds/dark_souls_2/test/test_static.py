@@ -6,6 +6,7 @@ from ..locations import locations_by_region
 from ..regions import region_list
 from ..rules import connection_rules, location_rules
 
+from BaseClasses import ItemClassification
 
 class TestStatic(unittest.TestCase):
 
@@ -116,9 +117,9 @@ class TestStatic(unittest.TestCase):
 
     def test_rule_items_exist(self):
         item_names = {item.name for item in item_list}
-        # TODO idk how to deal with events properly
         event_items = { location.name for locations in locations_by_region.values() for location in locations if location.is_event }
         item_names = item_names | event_items
+        
         rule_items = []
         for rule_data in connection_rules + location_rules:
             if callable(rule_data.rule):
@@ -127,6 +128,7 @@ class TestStatic(unittest.TestCase):
                 rule_items.append(rule_data.rule)
             if isinstance(rule_data.rule, List):
                 rule_items.extend(rule_data.rule)
+
         wrong = {item for item in rule_items if item not in item_names}
 
         if wrong:
@@ -134,6 +136,52 @@ class TestStatic(unittest.TestCase):
                 "\n" + "\n".join(
                     f"Item '{name}' from a rule is not in the item list"
                     for name in wrong
+                )
+            )
+
+    def test_rule_items_are_progression(self):
+        prog_items = {item.name for item in item_list if item.classification == ItemClassification.progression or ItemClassification == ItemClassification.progression_skip_balancing}
+        event_items = { location.name for locations in locations_by_region.values() for location in locations if location.is_event }
+        item_names = prog_items | event_items
+        
+        rule_items = []
+        for rule_data in connection_rules + location_rules:
+            if callable(rule_data.rule):
+                pass  # TODO
+            if isinstance(rule_data.rule, str):
+                rule_items.append(rule_data.rule)
+            if isinstance(rule_data.rule, List):
+                rule_items.extend(rule_data.rule)
+                
+        wrong = {item for item in rule_items if item not in item_names}
+
+        if wrong:
+            self.fail(
+                "\n" + "\n".join(
+                    f"Item '{name}' from a rule is not a progression item"
+                    for name in wrong
+                )
+            )
+
+    def test_all_progression_items_have_rules(self):
+        progression_items = [item.name for item in item_list if item.classification == ItemClassification.progression]
+        rule_items = []
+
+        for rule_data in connection_rules + location_rules:
+            if callable(rule_data.rule):
+                pass  # TODO
+            if isinstance(rule_data.rule, str):
+                rule_items.append(rule_data.rule)
+            if isinstance(rule_data.rule, List):
+                rule_items.extend(rule_data.rule)
+
+        missing = {progression_item for progression_item in progression_items if progression_item not in rule_items}
+
+        if missing:
+            self.fail(
+                "\n" + "\n".join(
+                    f"Progression Item '{name}' is not currently part of a rule"
+                    for name in missing
                 )
             )
 
