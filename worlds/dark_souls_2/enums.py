@@ -40,6 +40,7 @@ class ItemCategory(Enum):
     SOUL = "Souls"
     GESTURE = "Gestures"
     STATUE = "Statues"
+    UPGRADE_MATERIAL = "Upgrade Materials"
 
 
 class DLC(Enum):

@@ -28,6 +28,20 @@ class SunkenKingDLC(Toggle):
     """Enable Crown of the Sunken King DLC."""
     display_name = "Enable Crown of the Sunken King DLC"
 
+class CombatLogic(Choice):
+    """
+    Determines the distribution of Estus Flask Shards and Sublime Bone Dust.
+    Easy - Most shards/dust available fairly early on
+    Medium - Moderate amount of shards/dust available early in the game
+    Hard - There is minimal logical requirement for shards/dust to be available before the end of the game
+    Disabled - There is zero requirements for shards/dust anywhere; Lost Bastille is Sphere 1 in Scholar, and Sinners' Rise is Sphere 1 in vanilla.
+    """
+    display_name = "Combat Logic"
+    option_easy = 0
+    option_medium = 1
+    option_hard = 2
+    option_disabled = 3
+    default = option_medium
 
 class KeepInfiniteLifegems(Toggle):
     """Keep Melentia's infinite supply of lifegems unrandomized"""
@@ -127,7 +141,8 @@ option_groups = [
 
     OptionGroup("Quality of Life", [
         KeepInfiniteLifegems,
-        EarlyBlacksmith
+        EarlyBlacksmith,
+        CombatLogic
     ]),
 ]
 
@@ -150,5 +165,6 @@ class DarkSouls2Options(PerGameCommonOptions):
     min_equipment_reinforcement_in_10: MinEquipmentReinforcementIn10Option
     max_equipment_reinforcement_in_10: MaxEquipmentReinforcementIn10Option
 
+    combat_logic: CombatLogic
     infinite_lifegems: KeepInfiniteLifegems
     early_blacksmith: EarlyBlacksmith

@@ -47,7 +47,7 @@ class LocationData:
 
     @property
     def is_shop(self):
-        return self.ds2_id == APLocationType.ShopLineupParam
+        return self.location_type == APLocationType.ShopLineupParam
 
     @property
     def is_event(self):
@@ -3112,18 +3112,33 @@ for region_name, locations in locations_by_region.items():
         regions_by_location[location.name] = region_name
 
 location_name_groups: Dict[str, Set[str]] = {
-    "Bosses": set()
+    "Bosses": set(),
+    "Shops": set()
 }
 for region_name in locations_by_region:
     actual_region_name = region_name
+
+    # check if region has subregions
+    has_subregions = any(
+        other.startswith(f"{region_name} - ") and other != region_name
+        for other in locations_by_region
+    )
+
     if " - " in region_name:
         actual_region_name = region_name.split(" - ")[0]
+    elif has_subregions:
+        actual_region_name = f"{region_name} - Main"
 
     locations: List[LocationData] = locations_by_region[region_name]
     for location in locations:
         if location.is_event: continue
 
         # make a location group for each region
+        if region_name not in location_name_groups:
+            location_name_groups[region_name] = {location.name}
+        else:
+            location_name_groups[region_name].add(location.name)
+
         if actual_region_name not in location_name_groups:
             location_name_groups[actual_region_name] = {location.name}
         else:
@@ -3139,5 +3154,8 @@ for region_name in locations_by_region:
                 location_name_groups[category_name].add(location.name)
 
         # boss locations
-        if " - " in location.name or "boss drop" in location.name:
+        if " - " not in location.name or "boss drop" in location.name:
             location_name_groups["Bosses"].add(location.name)
+
+        if location.is_shop:
+            location_name_groups["Shops"].add(location.name)

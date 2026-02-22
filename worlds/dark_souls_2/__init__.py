@@ -11,7 +11,7 @@ from .options import DarkSouls2Options, option_groups
 from .locations import LocationData, locations_by_region, regions_by_location, locations_to_keep_unrandomized, location_name_groups
 from .items import ItemData, item_dictionary, item_list, item_name_groups
 from .regions import region_dictionary, region_list
-from .rules import connection_rules, location_rules
+from .rules import connection_rules, location_rules, combat_logic_easy, combat_logic_medium, combat_logic_hard
 
 
 class DS2Location(Location):
@@ -253,20 +253,49 @@ class DarkSouls2World(World):
                 location_rule_data.to_collection_rule(self.player)
             )
 
+        combat_rules = []
+        if self.options.combat_logic == "easy":
+            combat_rules = combat_logic_easy
+        elif self.options.combat_logic == "medium":
+            combat_rules = combat_logic_medium
+        elif self.options.combat_logic == "hard":
+            combat_rules = combat_logic_hard
+        
+        # TODO dont duplicate this code
+        if combat_rules:
+            for combat_rule_data in combat_rules:
+                _from, _to = combat_rule_data.spot.split(" -> ")
+                from_region = region_dictionary[_from]
+                to_region = region_dictionary[_to]
+
+                if not self._is_dlc_enabled(from_region.dlc):
+                    continue
+                if not self._is_dlc_enabled(to_region.dlc):
+                    continue
+                if not self._is_version_selected(combat_rule_data.version):
+                    continue
+
+                add_rule(
+                    self.multiworld.get_entrance(combat_rule_data.spot, self.player),
+                    combat_rule_data.to_collection_rule(self.player)
+                )
+
+
     def create_item(self, name: str) -> DS2Item:
         item_data: ItemData = item_dictionary[name]
 
         if item_data.max_reinforcement > 0 and self.random.randint(0, 99) < self.options.randomize_equipment_level_percentage:
             if item_data.max_reinforcement == 5:
-                item_data.reinforcement = self.random.randint(
-                    self.options.min_equipment_reinforcement_in_5,
-                    self.options.max_equipment_reinforcement_in_5
-                )
+                min_reinforcement = self.options.min_equipment_reinforcement_in_5
+                max_reinforcement = self.options.max_equipment_reinforcement_in_5
+                if min_reinforcement > max_reinforcement: min_reinforcement = max_reinforcement
+                item_data.reinforcement = self.random.randint(min_reinforcement, max_reinforcement)
+
             if item_data.max_reinforcement == 10:
-                item_data.reinforcement = self.random.randint(
-                    self.options.min_equipment_reinforcement_in_10,
-                    self.options.max_equipment_reinforcement_in_10
-                )
+                min_reinforcement = self.options.min_equipment_reinforcement_in_10
+                max_reinforcement = self.options.max_equipment_reinforcement_in_10
+                if min_reinforcement > max_reinforcement: min_reinforcement = max_reinforcement 
+                item_data.reinforcement = self.random.randint(min_reinforcement, max_reinforcement)
 
         return DS2Item(name, item_data.classification, item_data.code, self.player, item_data)
 

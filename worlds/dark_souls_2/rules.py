@@ -98,6 +98,7 @@ location_rules: List[RuleData] = [
     # Belfry Luna
     # Belfry Sol
     # Black Gulch
+    RuleData("Defeat the Rotten", "Unpetrify Statue in Black Gulch"),
     RuleData("Gulch: Pharros' Lockstone - by second bonfire", "Unpetrify Statue in Black Gulch"),
     # Brume Tower
     RuleData("BrumeTower: Old Radiant Lifegem x3 - cursed area, chest on left", "Tower Key"),
@@ -223,6 +224,7 @@ location_rules: List[RuleData] = [
     RuleData("ShadedWoods: Lion Mage Skirt - metal chest blocked by statue near boss path", "Unpetrify Lion Mage Set Statue in Shaded Ruins"),
     RuleData("ShadedWoods: Human Effigy x3 - statue-blocked metal chest, left from bonfire bridge", "Unpetrify Statue Blocking the Chest in Shaded Ruins", version=DS2Version.SOTFS),
     RuleData("ShadedWoods: Bleeding Serum x3 - statue-blocked metal chest, left from bonfire bridge", "Unpetrify Statue Blocking the Chest in Shaded Ruins", version=DS2Version.SOTFS),
+    RuleData("ShadedWoods: Repair - statue-blocked metal chest, left from bonfire bridge", "Unpetrify Statue Blocking the Chest in Shaded Ruins", version=DS2Version.SOTFS),
     RuleData("ShadedWoods: Estus Flask Shard - room where Ornifex is locked", "Fang Key", version=DS2Version.VANILLA),
     RuleData("ShadedWoods: Fragrant Branch of Yore - room where Ornifex is locked", "Fang Key", version=DS2Version.SOTFS),
     RuleData("ShadedWoods: Fang Key - petrified enemy by Shaded Ruins bonfire, drop", "Unpetrify Fang Key Statue in Shaded Ruins"),
@@ -326,4 +328,69 @@ location_rules: List[RuleData] = [
     RuleData("Chariot: Fire Whip - Gren shop", "Token of Spite"),
     RuleData("Chariot: Delicate String - Gren shop", "Token of Spite"),
     RuleData("Chariot: Red Sign Soapstone - Gren shop", "Token of Spite"),
+]
+
+combat_logic_easy: List[RuleData] = [
+    #Lost Sinner Route
+    RuleData("Forest of Fallen Giants -> Forest of Fallen Giants - Salamander Pit", lambda state, player: state.has("Estus Flask Shard", player, 6) and state.has("Sublime Bone Dust", player, 3)), 
+    RuleData("Forest of Fallen Giants - Soldier Key -> The Lost Bastille - FOFG", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("Heide's Tower of Flame -> Cathedral of Blue", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("No-man's Wharf -> The Lost Bastille - Wharf", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("The Lost Bastille - Late -> Sinners' Rise", lambda state, player: state.has("Estus Flask Shard", player, 7) and state.has("Sublime Bone Dust", player, 3)), 
+    #Old Iron King Route
+    RuleData("Huntsman's Copse -> Harvest Valley", lambda state, player: state.has("Estus Flask Shard", player, 4) and state.has("Sublime Bone Dust", player, 2)), 
+    RuleData("Huntsman's Copse -> Undead Purgatory", lambda state, player: state.has("Estus Flask Shard", player, 2) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("Earthen Peak -> Iron Keep", lambda state, player: state.has("Estus Flask Shard", player, 7) and state.has("Sublime Bone Dust", player, 3)), 
+    #The Rotten Route
+    RuleData("Majula -> The Pit", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("The Pit -> The Gutter", lambda state, player: state.has("Estus Flask Shard", player, 5) and state.has("Sublime Bone Dust", player, 2)), 
+    #Duke's Dear Freja Route(especially the Royal Rat Authority)
+    RuleData("Shaded Woods -> Doors of Pharros", lambda state, player: state.has("Estus Flask Shard", player, 5) and state.has("Sublime Bone Dust", player, 2)), 
+    RuleData("Doors of Pharros -> Brightstone Cove Tseldora", lambda state, player: state.has("Estus Flask Shard", player, 7) and state.has("Sublime Bone Dust", player, 3)), 
+    #Late game
+    RuleData("Shaded Woods -> Drangleic Castle", lambda state, player: state.has("Estus Flask Shard", player, 9) and state.has("Sublime Bone Dust", player, 4)), 
+    RuleData("Shaded Woods -> Aldia's Keep", lambda state, player: state.has("Estus Flask Shard", player, 9) and state.has("Sublime Bone Dust", player, 4)), 
+    #DLC
+    RuleData("Black Gulch -> Shulva, Sanctum City", lambda state, player: state.has("Estus Flask Shard", player, 12) and state.has("Sublime Bone Dust", player, 4)), 
+    RuleData("Iron Keep -> Brume Tower", lambda state, player: state.has("Estus Flask Shard", player, 12) and state.has("Sublime Bone Dust", player, 4)), 
+    RuleData("Drangleic Castle -> Frozen Eleum Loyce", lambda state, player: state.has("Estus Flask Shard", player, 12) and state.has("Sublime Bone Dust", player, 4)), 
+]
+
+combat_logic_medium: List[RuleData] = [
+    #Lost Sinner Route
+    RuleData("Forest of Fallen Giants -> Forest of Fallen Giants - Salamander Pit", lambda state, player: state.has("Estus Flask Shard", player, 4) and state.has("Sublime Bone Dust", player, 2)), 
+    RuleData("Forest of Fallen Giants - Soldier Key -> The Lost Bastille - FOFG", lambda state, player: state.has("Estus Flask Shard", player, 1) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("Heide's Tower of Flame -> Cathedral of Blue", lambda state, player: state.has("Estus Flask Shard", player, 2) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("No-man's Wharf -> The Lost Bastille - Wharf", lambda state, player: state.has("Estus Flask Shard", player, 1) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("The Lost Bastille - Late -> Sinners' Rise", lambda state, player: state.has("Estus Flask Shard", player, 5) and state.has("Sublime Bone Dust", player, 2)), 
+    #Old Iron King Route
+    RuleData("Huntsman's Copse -> Harvest Valley", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 2)), 
+    RuleData("Huntsman's Copse -> Undead Purgatory", lambda state, player: state.has("Estus Flask Shard", player, 2) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("Earthen Peak -> Iron Keep", lambda state, player: state.has("Estus Flask Shard", player, 5) and state.has("Sublime Bone Dust", player, 3)), 
+    #The Rotten Route
+    RuleData("Majula -> The Pit", lambda state, player: state.has("Estus Flask Shard", player, 2) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("The Pit -> The Gutter", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 2)), 
+    #Duke's Dear Freja Route(especially the Royal Rat Authority)
+    RuleData("Shaded Woods -> Doors of Pharros", lambda state, player: state.has("Estus Flask Shard", player, 3) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("Doors of Pharros -> Brightstone Cove Tseldora", lambda state, player: state.has("Estus Flask Shard", player, 5) and state.has("Sublime Bone Dust", player, 2)), 
+    #Late game
+    RuleData("Shaded Woods -> Drangleic Castle", lambda state, player: state.has("Estus Flask Shard", player, 8) and state.has("Sublime Bone Dust", player, 3)), 
+    RuleData("Shaded Woods -> Aldia's Keep", lambda state, player: state.has("Estus Flask Shard", player, 8) and state.has("Sublime Bone Dust", player, 3)), 
+    #DLC
+    RuleData("Black Gulch -> Shulva, Sanctum City", lambda state, player: state.has("Estus Flask Shard", player, 9) and state.has("Sublime Bone Dust", player, 4)), 
+    RuleData("Iron Keep -> Brume Tower", lambda state, player: state.has("Estus Flask Shard", player, 9) and state.has("Sublime Bone Dust", player, 4)), 
+    RuleData("Drangleic Castle -> Frozen Eleum Loyce", lambda state, player: state.has("Estus Flask Shard", player, 9) and state.has("Sublime Bone Dust", player, 4)), 
+]
+
+combat_logic_hard: List[RuleData] = [
+    #Lost Sinner Route
+    RuleData("Forest of Fallen Giants - Soldier Key -> The Lost Bastille - FOFG", lambda state, player: state.has("Estus Flask Shard", player, 1) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("No-man's Wharf -> The Lost Bastille - Wharf", lambda state, player: state.has("Estus Flask Shard", player, 1) and state.has("Sublime Bone Dust", player, 1)), 
+    RuleData("The Lost Bastille - Late -> Sinners' Rise", lambda state, player: state.has("Estus Flask Shard", player, 3)), 
+    #The Rotten Route
+    RuleData("Majula -> The Pit", lambda state, player: state.has("Estus Flask Shard", player, 2) and state.has("Sublime Bone Dust", player, 1)), 
+    #DLC
+    RuleData("Black Gulch -> Shulva, Sanctum City", lambda state, player: state.has("Estus Flask Shard", player, 6) and state.has("Sublime Bone Dust", player, 3)), 
+    RuleData("Iron Keep -> Brume Tower", lambda state, player: state.has("Estus Flask Shard", player, 6) and state.has("Sublime Bone Dust", player, 3)), 
+    RuleData("Drangleic Castle -> Frozen Eleum Loyce", lambda state, player: state.has("Estus Flask Shard", player, 6) and state.has("Sublime Bone Dust", player, 3)), 
 ]
