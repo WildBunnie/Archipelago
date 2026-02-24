@@ -150,6 +150,8 @@ location_rules: List[RuleData] = [
     RuleData("Drangleic: Petrified Something - before second boss", "Key to King's Passage", version=DS2Version.SOTFS),
     # Earthen Peak
     # Forest of Fallen Giants
+    RuleData("FOFG: Titanite Slab - contraption under ballista room", "Master Lockstone"),
+    RuleData("FOFG: Chloranthy Ring - contraption under ballista room", "Master Lockstone"),
     # Forest of Fallen Giants - Salamander Pit
     # Forest of Fallen Giants - Soldier Key
     # Frigid Outskirts
@@ -203,7 +205,12 @@ location_rules: List[RuleData] = [
     RuleData("Majula: Repair Powder - Lenigrast shop", "Lenigrast's Key"),
     RuleData("Majula: Flying Feline Boots - Shalquoir shop after killing Pharros and GraveOfSaints bosses", "Defeat Royal Rat Authority"),
     RuleData("Majula: Flying Feline Boots - Shalquoir shop after killing Pharros and GraveOfSaints bosses", "Defeat Royal Rat Vanguard"),
-    # Memory of Jeigh
+    # Memory of Jeigh TODO
+    # LocationData(OTHER, 1721000, "Drangleic: Royal Dirk - talk to Wellager after killing Jeigh boss"),
+    # LocationData(OTHER, 1721000, "Drangleic: Espada Ropera - talk to Wellager after killing Jeigh boss"),
+    # LocationData(OTHER, 1721000, "Drangleic: Llewellyn Armor - talk to Wellager after killing Jeigh boss", version=SOTFS),
+    # LocationData(OTHER, 1721000, "Drangleic: Llewellyn Gloves - talk to Wellager after killing Jeigh boss", version=SOTFS),
+    # LocationData(OTHER, 1721000, "Drangleic: Llewellyn Shoes - talk to Wellager after killing Jeigh boss", version=SOTFS),
     # Memory of Orro
     RuleData("Orro: Soul of a Hero x3 - behind contraption", "Master Lockstone"),
     RuleData("Orro: Fire Seed - behind contraption, illusory wall", "Master Lockstone"),

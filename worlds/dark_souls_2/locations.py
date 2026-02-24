@@ -582,6 +582,14 @@ locations_by_region: Dict[str, List[LocationData]] = {
         # LocationData(OTHER, 504001, "Drangleic: Looking Glass Knight Soul - Looking Glass Knight drop in NG+"),
         # LocationData(OTHER, 504001, "Drangleic: Ring of Steel Protection+2 - Looking Glass Knight drop in NG+"),
         # LocationData(OTHER, 506100, "Drangleic: Darklurker Soul"),
+        #
+        # TODO make this wellager checks require access to the jeigh memory
+        # LocationData(OTHER, 1721000, "Drangleic: Royal Dirk - talk to Wellager after killing Jeigh boss"),
+        # LocationData(OTHER, 1721000, "Drangleic: Espada Ropera - talk to Wellager after killing Jeigh boss"),
+        # LocationData(OTHER, 1721000, "Drangleic: Llewellyn Armor - talk to Wellager after killing Jeigh boss", version=SOTFS),
+        # LocationData(OTHER, 1721000, "Drangleic: Llewellyn Gloves - talk to Wellager after killing Jeigh boss", version=SOTFS),
+        # LocationData(OTHER, 1721000, "Drangleic: Llewellyn Shoes - talk to Wellager after killing Jeigh boss", version=SOTFS),
+        #
         # LocationData(OTHER, 1725000, "Drangleic: Dragon Chime - Pilgrams of Dark- speak to Grandhal again after defeating Darklurker"),
         LocationData(OTHER, 1760200, "Drangleic: Ring of the Dead - release locked Milfanito"),
         # LocationData(OTHER, 2006000, "Drangleic: Abyss Seal - Pilgrims of Dark join"),
@@ -1599,11 +1607,6 @@ locations_by_region: Dict[str, List[LocationData]] = {
         # LocationData(OTHER, 309701, "Jeigh: Giant Lord Soul - boss drop in NG+"),
         # LocationData(OTHER, 309701, "Jeigh: Giant's Kinship - boss drop in NG+"),
         # LocationData(OTHER, 309701, "Jeigh: Ring of Giants+2 - boss drop in NG+"),
-        LocationData(OTHER, 1721000, "Drangleic: Royal Dirk - talk to Wellager after killing Jeigh boss"),
-        LocationData(OTHER, 1721000, "Drangleic: Espada Ropera - talk to Wellager after killing Jeigh boss"),
-        LocationData(OTHER, 1721000, "Drangleic: Llewellyn Armor - talk to Wellager after killing Jeigh boss", version=SOTFS),
-        LocationData(OTHER, 1721000, "Drangleic: Llewellyn Gloves - talk to Wellager after killing Jeigh boss", version=SOTFS),
-        LocationData(OTHER, 1721000, "Drangleic: Llewellyn Shoes - talk to Wellager after killing Jeigh boss", version=SOTFS),
         LocationData(OTHER, 20106100, "Jeigh: Bonfire Ascetic - up first stairs"),
         LocationData(OTHER, 20106110, "Jeigh: Old Radiant Lifegem - right side before boss"),
         # LocationData(OTHER, 20106111, "Jeigh: Divine Blessing - On the battlefield- just before Giant Lord in NG+"),
@@ -1721,6 +1724,7 @@ locations_by_region: Dict[str, List[LocationData]] = {
         LocationData(OTHER, 10186160, "Wharf: Lifegem x3 - poison jar room, behind breakable wall"),
         LocationData(OTHER, 10186170, "Wharf: Throwing Knife x7 - poison jar room, alcove behind jars"),
         LocationData(OTHER, 10186170, "Wharf: Flame Butterfly - poison jar room, alcove behind jars"),
+        # TODO deal with gavlan changing places
         # LocationData(SHOP, 72600400, "Wharf: Ring of Giants - Lonesome Gavlan after No Man's Wharf", shop_price=5000.0),
         # LocationData(SHOP, 72600401, "Wharf: Ring of Giants - Lonesome Gavlan after Harvest Valley", shop_price=6000.0),
         # LocationData(SHOP, 72600402, "Wharf: Ring of Giants - Lonesome Gavlan after Doors of Pharros", shop_price=7000.0),

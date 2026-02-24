@@ -200,8 +200,7 @@ class DarkSouls2World(World):
             and item.classification == ItemClassification.progression
         ]
 
-        assert len(item_pool) + len(
-            missing_progression_items) <= max_pool_size, "Item pool cannot fit all dark souls 2 progression items"
+        assert len(item_pool) + len(missing_progression_items) <= max_pool_size, "Item pool cannot fit all dark souls 2 progression items"
 
         for progression_item in missing_progression_items:
             item_pool.append(self.create_item(progression_item))
