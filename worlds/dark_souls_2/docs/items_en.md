@@ -29,10 +29,10 @@
 
 ### Other
 
-* **Pharros' Lockstone**: This will hint the `Master Lockstone`
-* **Fragrant Branch of Yore**: This will hint statues
-* **Smelter Wedge**: This will hint `Smelter Wedge x11`
-* **Soul of a Giant**: This will hint `Soul of a Giant x5`
-* **Progression**: This will hint items marked as progression (not necessarily all the items you need to finish the run)
-* **Useful**: This will hint usefull items
+* **Pharros' Lockstone**: This group contains the `Master Lockstone`
+* **Fragrant Branch of Yore**: This group contains the statues
+* **Smelter Wedge**: This group contains the `Smelter Wedge x11`
+* **Soul of a Giant**: This group contains the `Soul of a Giant x5`
+* **Progression**: This group contains all the items marked as progression (not necessarily all the items you need to finish the run)
+* **Useful**: This group contains all the items marked as useful
 * **Everything**
