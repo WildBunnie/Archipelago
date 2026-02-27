@@ -154,6 +154,8 @@ location_rules: List[RuleData] = [
     RuleData("FOFG: Chloranthy Ring - contraption under ballista room", "Master Lockstone"),
     # Forest of Fallen Giants - Salamander Pit
     # Forest of Fallen Giants - Soldier Key
+    RuleData("FOFG: Twinkling Titanite x2 - after king's gate", "King's Ring"),
+    RuleData("FOFG: Fragrant Branch of Yore - after king's gate", "King's Ring", version=DS2Version.SOTFS),
     # Frigid Outskirts
     # Frozen Eleum Loyce
     RuleData("EleumLoyce: Soul of Aava, the King's Pet", "Eye of the Priestess"),
