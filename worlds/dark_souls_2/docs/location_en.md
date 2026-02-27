@@ -4,7 +4,7 @@
 
 ### Regions and Sub-Regions
 
-Regions may contain sub-regions as marked by the " - " separting the main region name from the subregion. If you exclude a region like "Brume Tower" you will exclude all it's subregions as well.
+Regions can include subregions, indicated by a ' - ' separating the main region name from its subregion. Excluding a region, such as 'Brume Tower,' will also exclude all of its subregions.
 
 * **Aldia's Keep**
 * **Belfry Luna**
