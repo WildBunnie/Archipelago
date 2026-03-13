@@ -3150,25 +3150,17 @@ for region_name in locations_by_region:
     for location in locations:
         if location.is_event: continue
 
-        # make a location group for each region
-        if region_name not in location_name_groups:
-            location_name_groups[region_name] = {location.name}
-        else:
-            location_name_groups[region_name].add(location.name)
-
-        if actual_region_name not in location_name_groups:
-            location_name_groups[actual_region_name] = {location.name}
-        else:
-            location_name_groups[actual_region_name].add(location.name)
+        # add location to a parent group that contains all items including those in all subregions
+        location_name_groups.setdefault(region_name, set()).add(location.name)
+        # add location to subregion group if applicable (including "Main")
+        location_name_groups.setdefault(actual_region_name, set()).add(location.name)
 
         # make a location group for each item category
         if location.original_item_name and location.original_item_name in item_dictionary:
             item_data = item_dictionary[location.original_item_name]
             category_name = item_data.category.value
-            if category_name not in location_name_groups:
-                location_name_groups[category_name] = {location.name}
-            else:
-                location_name_groups[category_name].add(location.name)
+
+            location_name_groups.setdefault(category_name, set()).add(location.name)
 
         # boss locations
         if " - " not in location.name or "boss drop" in location.name:
