@@ -76,6 +76,10 @@ class LocationData:
 
 
 # TODO check comments in sheet and fix it here
+"""Static dictionary of locations grouped by region.
+key: str - name of region & subregion if applicable
+value: List[LocationData] - list of LocationData in that region.
+"""
 locations_by_region: Dict[str, List[LocationData]] = {
     "Menu": [],
     "Aldia's Keep": [
@@ -3051,6 +3055,7 @@ locations_by_region: Dict[str, List[LocationData]] = {
     # ],
 }
 
+"""Static list of locations that should be kept unrandomized."""
 locations_to_keep_unrandomized: Set[int] = {
     # straid trades
     376801000, 376801001, 376801002, 376801003, 376801004, 376801005,
@@ -3109,12 +3114,21 @@ locations_to_keep_unrandomized: Set[int] = {
     370400501, 370400603, 370400604, 370400605
 }
 
+"""Inverted and flattened dictionary of locations_by_region.
+key: str - location name
+value: str - region name
+"""
 regions_by_location: dict[str, str] = {}
 
 for region_name, locations in locations_by_region.items():
     for location in locations:
         regions_by_location[location.name] = region_name
 
+
+"""Dictionary of Locations by game-logical group.
+key: str - group name (e.g. region name, item category, etc.)
+value: Set[str] - set of location names that belong to that group
+"""
 location_name_groups: Dict[str, Set[str]] = {
     "Bosses": set(),
     "Shops": set()
