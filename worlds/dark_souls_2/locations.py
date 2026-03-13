@@ -3118,12 +3118,11 @@ locations_to_keep_unrandomized: Set[int] = {
 key: str - location name
 value: str - region name
 """
-regions_by_location: dict[str, str] = {}
-
-for region_name, locations in locations_by_region.items():
-    for location in locations:
-        regions_by_location[location.name] = region_name
-
+regions_by_location: dict[str, str] = {
+    location.name: region_name
+    for region_name, locations in locations_by_region.items()
+    for location in locations
+}
 
 """Dictionary of Locations by game-logical group.
 key: str - group name (e.g. region name, item category, etc.)
