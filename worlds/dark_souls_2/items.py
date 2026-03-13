@@ -1564,7 +1564,4 @@ item_name_groups: Dict[str, Set[str]] = {
 for item in item_list:
     if item.exclude: continue
     category_name = item.category.value
-    if category_name not in item_name_groups:
-        item_name_groups[category_name] = {item.name}
-    else:
-        item_name_groups[category_name].add(item.name)
+    item_name_groups.setdefault(category_name, set()).add(item.name)
