@@ -3132,28 +3132,21 @@ location_name_groups: Dict[str, Set[str]] = {
     "Bosses": set(),
     "Shops": set()
 }
+regions_with_subregions: set[str] = set(region_name.split(" - ")[0] for region_name in locations_by_region if " - " in region_name)
 for region_name in locations_by_region:
-    actual_region_name = region_name
-
-    # check if region has subregions
-    has_subregions = any(
-        other.startswith(f"{region_name} - ") and other != region_name
-        for other in locations_by_region
-    )
-
-    if " - " in region_name:
-        actual_region_name = region_name.split(" - ")[0]
-    elif has_subregions:
-        actual_region_name = f"{region_name} - Main"
+    # if a main region has subregions, add - Main suffix to main region
+    region_name_with_sub = f"{region_name} - Main" if region_name in regions_with_subregions else region_name
+    parent_region_name = region_name.split(" - ")[0]
 
     locations: List[LocationData] = locations_by_region[region_name]
     for location in locations:
         if location.is_event: continue
 
-        # add location to a parent group that contains all items including those in all subregions
-        location_name_groups.setdefault(region_name, set()).add(location.name)
-        # add location to subregion group if applicable (including "Main")
-        location_name_groups.setdefault(actual_region_name, set()).add(location.name)
+        # add locations of subregion to subregion group if applicable
+        location_name_groups.setdefault(region_name_with_sub, set()).add(location.name)
+
+        # add locations of subregion to parent region group (including ... - Main if applicable)
+        location_name_groups.setdefault(parent_region_name, set()).add(location.name)
 
         # make a location group for each item category
         if location.original_item_name and location.original_item_name in item_dictionary:
