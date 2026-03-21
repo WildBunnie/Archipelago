@@ -334,6 +334,12 @@ class DarkSouls2World(World):
             "no_spell_req",
             "no_armor_req",
             "no_equip_load",
+
+            # stuff for potracker
+            "sunken_king_dlc",
+            "old_iron_king_dlc",
+            "ivory_king_dlc",
+            "combat_logic"
         )
 
         keep_unrandomized = locations_to_keep_unrandomized

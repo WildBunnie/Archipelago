@@ -1865,7 +1865,7 @@ locations_by_region: Dict[str, List[LocationData]] = {
         LocationData(OTHER, 10326180, "ShadedWoods: Skeptic's Spice - collapsed stairs in right tower before boss"),
         LocationData(OTHER, 10326190, "ShadedWoods: Lifegem - near big collapsing floor, corpse"),
         # LocationData(OTHER, 10326191, "ShadedWoods: Divine Blessing - Corpse next to the big collapsing floor in NG+"),
-        LocationData(OTHER, 10326200, "ShadedWoods: Flame Butterfly - on tree in boss arena", missable=True),
+        LocationData(OTHER, 10326200, "ShadedWoods: Flame Butterfly - on tree in boss arena"),
         LocationData(OTHER, 10326210, "ShadedWoods: Soul of a Brave Warrior - lower floor, building leading to Manscorpion Tark"),
         LocationData(OTHER, 10326210, "ShadedWoods: Pharros' Lockstone - lower floor, building leading to Manscorpion Tark"),
         LocationData(OTHER, 10326230, "ShadedWoods: Torch - passage past Manscorpion Tark"),
