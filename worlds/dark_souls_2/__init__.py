@@ -107,6 +107,11 @@ class DarkSouls2World(World):
             self.multiworld.early_items[self.player]["Lenigrast's Key"] = 1
         elif self.options.early_blacksmith == "early_local":
             self.multiworld.local_early_items[self.player]["Lenigrast's Key"] = 1
+        
+        if len(self.options.include_locations.value) > 0:
+            for location in self.location_name_to_id.keys():
+                if location not in self.options.include_locations:
+                    self.options.exclude_locations.value.add(location)
 
     def create_regions(self) -> None:
         region_lookup: dict[str, Region] = {}
@@ -204,6 +209,14 @@ class DarkSouls2World(World):
 
         for progression_item in missing_progression_items:
             item_pool.append(self.create_item(progression_item))
+        
+        # Try to add items from the "include_items" option
+        for item_name in self.options.include_items.value:
+            if len(item_pool) >= max_pool_size: break
+            if item_name in items_added: continue
+
+            item_pool.append(self.create_item(item_name))
+            items_added.append(item_name)
 
         # Fill remaining slots with filler items
         for _ in range(max_pool_size - len(item_pool)):
@@ -296,7 +309,11 @@ class DarkSouls2World(World):
                 if min_reinforcement > max_reinforcement: min_reinforcement = max_reinforcement 
                 item_data.reinforcement = self.random.randint(min_reinforcement, max_reinforcement)
 
-        return DS2Item(name, item_data.classification, item_data.code, self.player, item_data)
+        item_classification = item_data.classification
+        if item_data.name in self.options.useful_items.value and item_classification == ItemClassification.filler:
+            item_classification = ItemClassification.useful
+            
+        return DS2Item(name, item_classification, item_data.code, self.player, item_data)
 
     def get_filler_item_name(self) -> str:
         filler_items = {

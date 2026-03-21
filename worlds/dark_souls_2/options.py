@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Choice, OptionGroup, PerGameCommonOptions, Range, Toggle
+from Options import Choice, ExcludeLocations, ItemSet, LocationSet, OptionGroup, PerGameCommonOptions, Range, Toggle
 
 
 class GameVersion(Choice):
@@ -116,6 +116,34 @@ class EarlyBlacksmith(Choice):
     option_early_local = 2
     default = option_early_local
 
+class UsefulItems(ItemSet):
+    """
+    Items that will be marked as useful.
+    Useful items cannot be placed in excluded or unreachable locations.
+    Both individual item names and item categories can be used here.
+    """
+    display_name = "Useful Items"
+    default = frozenset({"Boss Souls", "Upgrade Materials"})
+
+class IncludeItems(ItemSet):
+    """
+    Items that will be included in the item pool if there is space.
+    This can be helpful if you want to include an item that is not in logic by default.
+    Each item will only be added to the item pool once.
+    """
+    display_name = "Include Items"
+
+class IncludeLocations(LocationSet):
+    """
+    Only these locations may contain an important item.
+    This does the opposite of Excluded Locations.
+    If empty, no restriction is applied.
+    """
+    display_name = "Included Locations"
+
+class ExcludeLocations(LocationSet):
+    """Prevent these locations from having an important item."""
+    display_name = "Excluded Locations"
 
 option_groups = [
     OptionGroup("Game Options", [
@@ -144,6 +172,13 @@ option_groups = [
         EarlyBlacksmith,
         CombatLogic
     ]),
+
+    OptionGroup("Item & Location Options", [
+        ExcludeLocations,
+        IncludeLocations,
+        UsefulItems,
+        IncludeItems
+    ]),
 ]
 
 
@@ -168,3 +203,8 @@ class DarkSouls2Options(PerGameCommonOptions):
     combat_logic: CombatLogic
     infinite_lifegems: KeepInfiniteLifegems
     early_blacksmith: EarlyBlacksmith
+
+    exclude_locations: ExcludeLocations
+    include_locations: IncludeLocations
+    useful_items: UsefulItems
+    include_items: IncludeItems
