@@ -302,6 +302,7 @@ class DarkSouls2World(World):
         filler_items = {
             item.name for item in item_list
             if item.category != ItemCategory.UNIQUE
+            and item.classification == ItemClassification.filler
             and not item.skip
             and not item.exclude
             and not item.version == DS2Version.SOTFS
