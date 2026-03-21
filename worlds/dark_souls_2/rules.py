@@ -130,6 +130,11 @@ location_rules: List[RuleData] = [
     RuleData("Pharros: Soul of a Brave Warrior - upper level, three-part contraption", "Master Lockstone"),
     # Dragon Aerie
     # Dragon Shrine
+    RuleData("DragonShrine: Staff of Wisdom - after bonfire, contraption under stairs", "Master Lockstone", version=DS2Version.VANILLA),
+    RuleData("DragonShrine: Mask of Judgment - after bonfire, contraption under stairs", "Master Lockstone"),
+    RuleData("DragonShrine: Robe of Judgment - after bonfire, contraption under stairs", "Master Lockstone"),
+    RuleData("DragonShrine: Manchettes of Judgment - after bonfire, contraption under stairs", "Master Lockstone"),
+    RuleData("DragonShrine: Tights of Judgment - after bonfire, contraption under stairs", "Master Lockstone"),
     # Dragons Sanctum
     RuleData("DragonsSanctum: Dried Root - room behind Eternal Sanctum key door , Metal chest", "Eternal Sanctum Key"),
     RuleData("DragonsSanctum: Dried Root x2 - room behind Eternal Sanctum key door , Metal chest", "Eternal Sanctum Key"),
@@ -149,6 +154,8 @@ location_rules: List[RuleData] = [
     RuleData("Drangleic: Alluring Skull x3 - before second boss", "Key to King's Passage"),
     RuleData("Drangleic: Petrified Something - before second boss", "Key to King's Passage", version=DS2Version.SOTFS),
     # Earthen Peak
+    RuleData("EarthenPeak: Poisonbite Ring - behind Pharros contraption by Lucatiel, metal chest", "Master Lockstone"),
+    RuleData("EarthenPeak: Soul of a Proud Knight - behind Pharros contraption by Lucatiel, metal chest", "Master Lockstone"),
     # Forest of Fallen Giants
     RuleData("FOFG: Titanite Slab - contraption under ballista room", "Master Lockstone"),
     RuleData("FOFG: Chloranthy Ring - contraption under ballista room", "Master Lockstone"),
@@ -159,6 +166,7 @@ location_rules: List[RuleData] = [
     # Frigid Outskirts
     # Frozen Eleum Loyce
     RuleData("EleumLoyce: Soul of Aava, the King's Pet", "Eye of the Priestess"),
+    RuleData("EleumLoyce: Durgo's Hat - ballista bridge Pharros contraption, metal chest", "Master Lockstone"),
     # Grave of Saints
     RuleData("GraveOfSaints: Whisper of Despair - after bridge, second floor", "Master Lockstone"),
     RuleData("GraveOfSaints: Torch - after bridge, second floor", "Master Lockstone"),
@@ -242,6 +250,7 @@ location_rules: List[RuleData] = [
     RuleData("ShadedWoods: Soul of a Brave Warrior - ruined building near statue, jump out window by bonfire", ["Unpetrify Statue near Manscorpion Tark", "Unpetrify Statue near Black Knight Halberd"]),
     RuleData("ShadedWoods: Twilight Herb - ruined building near statue, jump out window by bonfire", ["Unpetrify Statue near Manscorpion Tark", "Unpetrify Statue near Black Knight Halberd"]),
     # Shrine of Amana
+    RuleData("Amana: Helix Halberd - submerged Pharros contraption after Crumbled Ruins bonfire, metal chest", "Master Lockstone"),
     RuleData("Amana: King's Crown - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
     RuleData("Amana: King's Armor - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
     RuleData("Amana: King's Gauntlets - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
