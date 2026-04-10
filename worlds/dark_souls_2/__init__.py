@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Any, Iterable, List, Mapping
+from typing import Any, Iterable, List, Mapping, TextIO
 
 from BaseClasses import (Item, ItemClassification, Location,
                          LocationProgressType, Region, Tutorial)
@@ -203,6 +203,7 @@ class DarkSouls2World(World):
             item.name for item in item_list
             if item.name not in items_added
             and item.classification == ItemClassification.progression
+            and self._is_version_selected(item.version)
         ]
 
         assert len(item_pool) + len(missing_progression_items) <= max_pool_size, "Item pool cannot fit all dark souls 2 progression items"
@@ -231,8 +232,9 @@ class DarkSouls2World(World):
         for location in locations:
             if location.address != None and location.data.is_shop:
                 add_item_rule(location, lambda item:
-                              (item.player != self.player or
-                               item.data.bundle == False))
+                                item.player != self.player
+                                or (not item.data.bundle and not item.name.lower().startswith("torch"))
+                            )
 
         for connection_rule_data in connection_rules:
             _from, _to = connection_rule_data.spot.split(" -> ")
