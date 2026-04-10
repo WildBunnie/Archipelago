@@ -312,7 +312,9 @@ class DarkSouls2World(World):
         item_classification = item_data.classification
         if item_data.name in self.options.useful_items.value and item_classification == ItemClassification.filler:
             item_classification = ItemClassification.useful
-            
+        elif item_data.category == ItemCategory.FLASK_UPGRADE and self.options.combat_logic != "disabled":
+            item_classification = ItemClassification.progression_skip_balancing
+
         return DS2Item(name, item_classification, item_data.code, self.player, item_data)
 
     def get_filler_item_name(self) -> str:
@@ -325,6 +327,14 @@ class DarkSouls2World(World):
             and not item.version == DS2Version.SOTFS
         }
         return self.random.choice(tuple(filler_items))
+
+    def write_spoiler(self, spoiler_handle: TextIO) -> None:
+        if len(self.options.include_locations.value) > 0:
+            spoiler_handle.write(f"\nLocations that can have Progression and Useful items:\n")
+            for location in self.multiworld.get_locations(self.player):
+                if location.progress_type == LocationProgressType.EXCLUDED: continue
+                if location.address == None: continue # events
+                spoiler_handle.write(f"\n- {location.name}")
 
     # TODO review
     def fill_slot_data(self) -> Mapping[str, Any]:
