@@ -67,7 +67,9 @@ There exist location groups for all item categories as well. This means that if 
 
 ### Other
 * **Bosses**
-* **Shops**
+* **Shops**: Contains all shops
+* **Base Shops**: Contains shops that are unlocked by default after opening them for the first time
+* **Unlockable Shops**: Contains shops that require you to do something before they are available, like killing a boss or spending a certain amount of souls
 * **Everywhere**
 
 
