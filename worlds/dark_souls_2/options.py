@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from Options import Choice, ExcludeLocations, ItemSet, LocationSet, OptionGroup, PerGameCommonOptions, Range, Toggle
+from Options import Choice, ItemSet, LocationSet, OptionGroup, PerGameCommonOptions, Range, Toggle, Visibility, DeathLink
 
 
 class GameVersion(Choice):
@@ -12,7 +12,6 @@ class GameVersion(Choice):
     option_sotfs = 0
     option_vanilla = 1
     default = 0
-
 
 class OldIronKingDLC(Toggle):
     """Enable Crown of the Old Iron King DLC."""
@@ -145,6 +144,151 @@ class ExcludeLocations(LocationSet):
     """Prevent these locations from having an important item."""
     display_name = "Excluded Locations"
 
+class TrapPreset(Choice):
+    """Default selection for trap counts. Possible trap counts can be limited by the number of games being played"""
+    display_name = "Trap Preset"
+    option_none = 0
+    option_easy = 1
+    option_medium = 2
+    option_hard = 3
+    option_good_luck = 4
+    default = option_none
+
+class PoisonTrap(Range):
+    """Immediately triggers poison"""
+    display_name = "Poison Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class BleedingTrap(Range):
+    """Immediately deals bleeding damage"""
+    display_name = "Bleeding Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class CurseTrap(Range):
+    """Immediately triggers a curse"""
+    display_name = "Curse Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class FireAndKnockdownTrap(Range):
+    """Immediately triggers the fire & knockdown efffect (covered in oil and encounter fire)"""
+    display_name = "Fire & Knockdown Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class ToxicTrap(Range):
+    """Immediately trigger toxic"""
+    display_name = "Toxic Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+class PetrificationTrap(Range):
+    """Immediately trigger petrification (kills player)"""
+    display_name = "Petrification Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class SlightCorrosionTrap(Range):
+    """Only apply a small amount of corrosion to equipment (roughly 10-15%)"""
+    display_name = "Slight Corrosion Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class MediumCorrosionTrap(Range):
+    """Only apply a medium amount of corrosion to equipment (roughly 30-50%)"""
+    display_name = "Medium Corrosion Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class HeavyCorrosionTrap(Range):
+    """Only apply a small amount of corrosion to equipment (roughly 70-100%)"""
+    display_name = "Heavy Corrosion Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class HelloCarvingTrap(Range):
+    """Immediately throws the hello carving"""
+    display_name = "Hello Carving Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class ThankYouCarvingTrap(Range):
+    """Immediately throws the thank you carving"""
+    display_name = "Thank You Carving Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class SorryCarvingTrap(Range):
+    """Immediately throws the sorry carving"""
+    display_name = "Sorry Carving Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class VeryGoodCarvingTrap(Range):
+    """Immediately throws the very good carving"""
+    display_name = "Very Good Carving Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class ImmolationTrap(Range):
+    """Immediately triggers immolation"""
+    display_name = "Immolation Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class FirebombTrap(Range):
+    """Immediately throws a firebomb"""
+    display_name = "Firebomb Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class BlackFirebombTrap(Range):
+    """Immediately throws a black firebomb"""
+    display_name = "Black Firebomb Trap"
+    range_start = 0
+    range_end = 100
+    default = 0
+    visibility = Visibility.complex_ui
+
+class RandomDeathCarving(Toggle):
+    """Throw out a random carving upon death."""
+    display_name = "Random Death Carving"
+
+class RandomTrapCarving(Toggle):
+    """Throw out a random carving upon getting a trap."""
+    display_name = "Random Trap Carving"
+
 option_groups = [
     OptionGroup("Game Options", [
         GameVersion,
@@ -179,8 +323,31 @@ option_groups = [
         UsefulItems,
         IncludeItems
     ]),
-]
 
+    OptionGroup("Traps", [
+        TrapPreset,
+        RandomTrapCarving,
+        PoisonTrap,
+        BleedingTrap,
+        CurseTrap,
+        FireAndKnockdownTrap,
+        ToxicTrap,
+        PetrificationTrap,
+        SlightCorrosionTrap,
+        MediumCorrosionTrap,
+        HeavyCorrosionTrap,
+        HelloCarvingTrap,
+        ThankYouCarvingTrap,
+        SorryCarvingTrap,
+        VeryGoodCarvingTrap,
+        ImmolationTrap,
+        FirebombTrap,
+        BlackFirebombTrap,
+
+        DeathLink,
+        RandomDeathCarving,
+    ]),
+]
 
 @dataclass
 class DarkSouls2Options(PerGameCommonOptions):
@@ -208,3 +375,111 @@ class DarkSouls2Options(PerGameCommonOptions):
     include_locations: IncludeLocations
     useful_items: UsefulItems
     include_items: IncludeItems
+
+    trap_preset: TrapPreset
+    random_trap_carving: RandomTrapCarving
+    poison_trap: PoisonTrap
+    bleeding_trap: BleedingTrap
+    curse_trap: CurseTrap
+    fire_and_knockdown_trap: FireAndKnockdownTrap
+    toxic_trap: ToxicTrap
+    petrification_trap: PetrificationTrap
+    slight_corrosion_trap: SlightCorrosionTrap
+    medium_corrosion_trap: MediumCorrosionTrap
+    heavy_corrosion_trap: HeavyCorrosionTrap
+    hello_carving_trap: HelloCarvingTrap
+    thank_you_carving_trap: ThankYouCarvingTrap
+    sorry_carving_trap: SorryCarvingTrap
+    very_good_carving_trap: VeryGoodCarvingTrap
+    immolation_trap: ImmolationTrap
+    firebomb_trap: FirebombTrap
+    black_firebomb_trap: BlackFirebombTrap
+
+    death_link: DeathLink
+    random_death_carving: RandomDeathCarving
+
+    def get_trap_range_value(self, trap_name: str):
+        if (trap_name == "Poison Trap"):
+            return self.poison_trap.value
+        if (trap_name == "Bleeding Trap"):
+            return self.bleeding_trap.value
+        if (trap_name == "Curse Trap"):
+            return self.curse_trap.value
+        if (trap_name == "Fire & Knockdown Trap"):
+            return self.fire_and_knockdown_trap.value
+        if (trap_name == "Toxic Trap"):
+            return self.toxic_trap.value
+        if (trap_name == "Petrification Trap"):
+            return self.petrification_trap.value
+        if (trap_name == "Slight Corrosion Trap"):
+            return self.slight_corrosion_trap.value
+        if (trap_name == "Medium Corrosion Trap"):
+            return self.medium_corrosion_trap.value
+        if (trap_name == "Heavy Corrosion Trap"):
+            return self.heavy_corrosion_trap.value
+        if (trap_name == "Hello Carving Trap"):
+            return self.hello_carving_trap.value
+        if (trap_name == "Thank You Carving Trap"):
+            return self.thank_you_carving_trap.value
+        if (trap_name == "Sorry Carving Trap"):
+            return self.sorry_carving_trap.value
+        if (trap_name == "Very Good Carving Trap"):
+            return self.very_good_carving_trap.value
+        if (trap_name == "Immolation Trap"):
+            return self.immolation_trap.value
+        if (trap_name == "Firebomb Trap"):
+            return self.firebomb_trap.value
+        if (trap_name == "Black Firebomb Trap"):
+            return self.black_firebomb_trap.value
+        return None
+    
+    def set_trap_range_value(self, trap_name: str, value: int):
+        if (trap_name == "Poison Trap"):
+            self.poison_trap.value = value
+            return 1
+        if (trap_name == "Bleeding Trap"):
+            self.bleeding_trap.value = value
+            return 1
+        if (trap_name == "Curse Trap"):
+            self.curse_trap.value = value
+            return 1
+        if (trap_name == "Fire & Knockdown Trap"):
+            self.fire_and_knockdown_trap.value = value
+            return 1
+        if (trap_name == "Toxic Trap"):
+            self.toxic_trap.value = value
+            return 1
+        if (trap_name == "Petrification Trap"):
+            self.petrification_trap.value = value
+            return 1
+        if (trap_name == "Slight Corrosion Trap"):
+            self.slight_corrosion_trap.value = value
+            return 1
+        if (trap_name == "Medium Corrosion Trap"):
+            self.medium_corrosion_trap.value = value
+            return 1
+        if (trap_name == "Heavy Corrosion Trap"):
+            self.heavy_corrosion_trap.value = value
+            return 1
+        if (trap_name == "Hello Carving Trap"):
+            self.hello_carving_trap.value = value
+            return 1
+        if (trap_name == "Thank You Carving Trap"):
+            self.thank_you_carving_trap.value = value
+            return 1
+        if (trap_name == "Sorry Carving Trap"):
+            self.sorry_carving_trap.value = value
+            return 1
+        if (trap_name == "Very Good Carving Trap"):
+            self.very_good_carving_trap.value = value
+            return 1
+        if (trap_name == "Immolation Trap"):
+            self.immolation_trap.value = value
+            return 1
+        if (trap_name == "Firebomb Trap"):
+            self.firebomb_trap.value = value
+            return 1
+        if (trap_name == "Black Firebomb Trap"):
+            self.black_firebomb_trap.value = value
+            return 1
+        return 0
