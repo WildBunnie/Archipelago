@@ -440,5 +440,8 @@ class DarkSouls2World(World):
                 })
                 
         slot_data["death_link"] = self.options.death_link.value
+        slot_data["random_trap_carving"] = self.options.random_trap_carving.value
+        slot_data["random_death_carving"] = self.options.random_death_carving.value
+        slot_data["ds2_shared_traps"] = self.options.ds2_shared_traps.value
 
         return slot_data

@@ -289,6 +289,10 @@ class RandomTrapCarving(Toggle):
     """Throw out a random carving upon getting a trap."""
     display_name = "Random Trap Carving"
 
+class DS2SharedTraps(Toggle):
+    """This allows a player sending a trap to someone else to also experience said trap."""
+    display_name = "DS2 Shared Traps"
+
 option_groups = [
     OptionGroup("Game Options", [
         GameVersion,
@@ -327,6 +331,7 @@ option_groups = [
     OptionGroup("Traps", [
         TrapPreset,
         RandomTrapCarving,
+        DS2SharedTraps,
         PoisonTrap,
         BleedingTrap,
         CurseTrap,
@@ -378,6 +383,7 @@ class DarkSouls2Options(PerGameCommonOptions):
 
     trap_preset: TrapPreset
     random_trap_carving: RandomTrapCarving
+    ds2_shared_traps: DS2SharedTraps
     poison_trap: PoisonTrap
     bleeding_trap: BleedingTrap
     curse_trap: CurseTrap
