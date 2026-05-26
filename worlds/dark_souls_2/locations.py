@@ -17,16 +17,16 @@ SOTFS = DS2Version.SOTFS
 
 @dataclass
 class LocationData:
-    location_type: APLocationType
+    location_type: APLocationType | None
     """TODO"""
 
-    ds2_id: int
+    ds2_id: int | None
     """TODO"""
 
     name: str
     """The Archipelago name for this location."""
 
-    version: DS2Version = None
+    version: DS2Version | None = None
     """The version that this location is part of."""
 
     shop_price: float = 0
@@ -38,10 +38,10 @@ class LocationData:
     keep_original_item: bool = False
     """Whether this location will keep it's original item."""
 
-    original_item_name: str = field(init=False)
+    original_item_name: str | None = field(init=False)
     """The item that is found at this location in the non randomized game."""
 
-    address: int = field(init=False)
+    address: int | None = field(init=False)
     """The Archipelago address for this location."""
 
     next_address: ClassVar[int] = 1

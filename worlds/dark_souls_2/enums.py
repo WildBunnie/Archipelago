@@ -1,5 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
+import re
 from BaseClasses import ItemClassification
 
 
@@ -95,6 +96,11 @@ class ItemData:
 
     reinforcement: int = 0
     """The reinforcement level for this item."""
+    
+    def __post_init__(self):
+        if re.search(r' x\d+$', self.name):
+            self.bundle = True
+
 
 @dataclass
 class TrapData(ItemData):
