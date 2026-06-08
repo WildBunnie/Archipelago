@@ -359,7 +359,7 @@ class DarkSouls2World(World):
             keep_unrandomized.add(375400601)
 
         _location_map = {}
-        for locations in locations_by_region.values():
+        for region_name, locations in locations_by_region.items():
             for location_data in locations:
                 if location_data.is_event:
                     continue
@@ -369,6 +369,7 @@ class DarkSouls2World(World):
                 if key not in _location_map:
                     _location_map[key] = {
                         "location_key": key,
+                        "region_name": region_name,
                         "archipelago_ids": []
                     }
 
