@@ -1,6 +1,7 @@
 import unittest
 from typing import List
 
+from ..enums import DS2Version
 from ..items import item_list
 from ..locations import locations_by_region
 from ..regions import region_list
@@ -11,8 +12,20 @@ from BaseClasses import ItemClassification
 class TestStatic(unittest.TestCase):
 
     # check for location names with same id but different location description (on same version)
-
     location_list = [ location for locations in locations_by_region.values() for location in locations]
+
+    @staticmethod
+    def _get_rule_items(rule_data):
+        if callable(rule_data.rule):
+            return []
+
+        if isinstance(rule_data.rule, str):
+            return [rule_data.rule]
+
+        if isinstance(rule_data.rule, list):
+            return rule_data.rule
+
+        return []
 
     def test_no_duplicate_location_names(self):
         seen = set()
@@ -119,15 +132,9 @@ class TestStatic(unittest.TestCase):
         item_names = {item.name for item in item_list}
         event_items = { location.name for locations in locations_by_region.values() for location in locations if location.is_event }
         item_names = item_names | event_items
-        
         rule_items = []
         for rule_data in connection_rules + location_rules:
-            if callable(rule_data.rule):
-                pass  # TODO
-            if isinstance(rule_data.rule, str):
-                rule_items.append(rule_data.rule)
-            if isinstance(rule_data.rule, List):
-                rule_items.extend(rule_data.rule)
+            rule_items.extend(self._get_rule_items(rule_data))
 
         wrong = {item for item in rule_items if item not in item_names}
 
@@ -143,16 +150,10 @@ class TestStatic(unittest.TestCase):
         prog_items = {item.name for item in item_list if item.classification == ItemClassification.progression or ItemClassification == ItemClassification.progression_skip_balancing}
         event_items = { location.name for locations in locations_by_region.values() for location in locations if location.is_event }
         item_names = prog_items | event_items
-        
         rule_items = []
         for rule_data in connection_rules + location_rules:
-            if callable(rule_data.rule):
-                pass  # TODO
-            if isinstance(rule_data.rule, str):
-                rule_items.append(rule_data.rule)
-            if isinstance(rule_data.rule, List):
-                rule_items.extend(rule_data.rule)
-                
+            rule_items.extend(self._get_rule_items(rule_data))
+
         wrong = {item for item in rule_items if item not in item_names}
 
         if wrong:
@@ -166,14 +167,8 @@ class TestStatic(unittest.TestCase):
     def test_all_progression_items_have_rules(self):
         progression_items = [item.name for item in item_list if item.classification == ItemClassification.progression]
         rule_items = []
-
         for rule_data in connection_rules + location_rules:
-            if callable(rule_data.rule):
-                pass  # TODO
-            if isinstance(rule_data.rule, str):
-                rule_items.append(rule_data.rule)
-            if isinstance(rule_data.rule, List):
-                rule_items.extend(rule_data.rule)
+            rule_items.extend(self._get_rule_items(rule_data))
 
         missing = {progression_item for progression_item in progression_items if progression_item not in rule_items}
 
@@ -182,6 +177,36 @@ class TestStatic(unittest.TestCase):
                 "\n" + "\n".join(
                     f"Progression Item '{name}' is not currently part of a rule"
                     for name in missing
+                )
+            )
+
+    def test_sotfs_item_rules_are_marked_sotfs(self):
+        item_versions = {
+            item.name: item.version
+            for item in item_list
+        }
+
+        wrong = []
+
+        for rule_data in connection_rules + location_rules:
+            rule_items = self._get_rule_items(rule_data)
+
+            if not rule_items:
+                continue
+
+            requires_sotfs = all(
+                item_versions.get(item) == DS2Version.SOTFS
+                for item in rule_items
+            )
+
+            if requires_sotfs and rule_data.version != DS2Version.SOTFS:
+                wrong.append(rule_data.spot)
+
+        if wrong:
+            self.fail(
+                "\n" + "\n".join(
+                    f"Rule '{spot}' requires a SotFS-only item but is not marked as SotFS"
+                    for spot in wrong
                 )
             )
 
