@@ -109,11 +109,13 @@ class MaxEquipmentReinforcementIn10Option(Range):
 
 
 class EarlyBlacksmith(Choice):
-    """Force Lenigrast's key into an early sphere in your world or across all worlds."""
+    """Force Lenigrast's key and the Dull Ember into an early sphere in your world or across all worlds."""
     display_name = "Early Blacksmith"
     option_anywhere = 0
     option_early_global = 1
     option_early_local = 2
+    option_early_global_with_ember = 3
+    option_early_local_with_ember = 4
     default = option_early_local
 
 class UsefulItems(ItemSet):

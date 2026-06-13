@@ -107,6 +107,12 @@ class DarkSouls2World(World):
             self.multiworld.early_items[self.player]["Lenigrast's Key"] = 1
         elif self.options.early_blacksmith == "early_local":
             self.multiworld.local_early_items[self.player]["Lenigrast's Key"] = 1
+        elif self.options.early_blacksmith == "early_global_with_ember":
+            self.multiworld.early_items[self.player]["Lenigrast's Key"] = 1
+            self.multiworld.early_items[self.player]["Dull Ember"] = 1
+        elif self.options.early_blacksmith == "early_local_with_ember":
+            self.multiworld.local_early_items[self.player]["Lenigrast's Key"] = 1
+            self.multiworld.local_early_items[self.player]["Dull Ember"] = 1
         
         if len(self.options.include_locations.value) > 0:
             for location in self.location_name_to_id.keys():
