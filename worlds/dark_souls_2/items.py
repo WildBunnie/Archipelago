@@ -81,7 +81,7 @@ item_list: list[ItemData] = [
     ItemData(132000016, "Unpetrify Statue near Manscorpion Tark",              ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
     ItemData(132000017, "Unpetrify Warlock Mask Statue in Shaded Ruins",       ItemCategory.STATUE, version=SOTFS),
     ItemData(132000018, "Unpetrify Statue Blocking the Chest in Shaded Ruins", ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
-    ItemData(211000030, "Unpetrify Milfanito Entrance Statue",                 ItemCategory.STATUE, version=SOTFS),
+    ItemData(211000030, "Unpetrify Milfanito Entrance Statue",                 ItemCategory.STATUE, classification=ItemClassification.progression, version=SOTFS),
     
     ItemData(1000000,  "Dagger",                                              ItemCategory.MELEE_WEAPON, max_reinforcement=10),
     ItemData(1010000,  "Bandit's Knife",                                      ItemCategory.MELEE_WEAPON, max_reinforcement=10),

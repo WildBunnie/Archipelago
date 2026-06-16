@@ -257,6 +257,9 @@ location_rules: List[RuleData] = [
     RuleData("Amana: King's Gauntlets - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
     RuleData("Amana: King's Leggings - behind door, opens after defeating Vendrick, metal chest", "Soul of a Giant x5"),
     RuleData("Amana: Soul of the King - throne behind door, opens after defeating Vendrick", "Soul of a Giant x5"),
+    RuleData("Amana: Manslayer - outside tower with praying Milfanito, submerged metal chest", "Unpetrify Milfanito Entrance Statue", version=DS2Version.SOTFS),
+    RuleData("Amana: Bonfire Ascetic - outside tower with praying Milfanito, metal chest", "Unpetrify Milfanito Entrance Statue", version=DS2Version.SOTFS),
+    RuleData("Amana: Fire Seed - in cave, under stairs, tower with praying Milfanito", "Unpetrify Milfanito Entrance Statue", version=DS2Version.SOTFS),
     # Shulva Sanctum City
     # Sinners Rise
     RuleData("SinnersRise: Fire Seed - locked upper left cell", "Bastille Key"),
