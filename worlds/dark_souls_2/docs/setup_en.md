@@ -32,6 +32,7 @@ On the mod’s release page, you will find three files:
 
 ### Running and Connecting to the Game
 
+0. If playing on Linux, add `WINEDLLOVERRIDES="dinput8.dll=n,b" %command%` to the game's launch options on Steam before launching. If you are on Windows you don't need to do this.
 1. Launch the game. An overlay should appear automatically.
 2. Before creating a save file, connect to the Archipelago server:
    - Enter the server URI (e.g. `archipelago.gg:123456`)

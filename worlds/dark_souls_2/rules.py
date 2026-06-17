@@ -98,8 +98,8 @@ location_rules: List[RuleData] = [
     # Belfry Luna
     # Belfry Sol
     # Black Gulch
-    RuleData("Defeat the Rotten", "Unpetrify Statue in Black Gulch"),
-    RuleData("Gulch: Pharros' Lockstone - by second bonfire", "Unpetrify Statue in Black Gulch"),
+    RuleData("Defeat the Rotten", "Unpetrify Statue in Black Gulch", version=DS2Version.SOTFS),
+    RuleData("Gulch: Pharros' Lockstone - by second bonfire", "Unpetrify Statue in Black Gulch", version=DS2Version.SOTFS),
     # Brume Tower
     RuleData("BrumeTower: Old Radiant Lifegem x3 - cursed area, chest on left", "Tower Key"),
     RuleData("BrumeTower: Fire Snake - cursed area, chest on right", "Tower Key"),
