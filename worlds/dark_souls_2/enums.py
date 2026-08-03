@@ -1,4 +1,7 @@
 from enum import Enum
+from dataclasses import dataclass
+import re
+from BaseClasses import ItemClassification
 
 
 class DS2Version(Enum):
@@ -15,6 +18,7 @@ class APLocationType(Enum):
 class APItemType(Enum):
     ITEM = 1
     EVENT = 2
+    TRAP = 3
 
 
 class ItemCategory(Enum):
@@ -41,6 +45,7 @@ class ItemCategory(Enum):
     GESTURE = "Gestures"
     STATUE = "Statues"
     UPGRADE_MATERIAL = "Upgrade Materials"
+    TRAP = "Trap"
 
 
 class DLC(Enum):
@@ -48,3 +53,65 @@ class DLC(Enum):
     OLD_IRON_KING = 2
     IVORY_KING = 3
     ALL = 4
+
+# moved ItemData into here to avoid circular import
+# TrapData needs ItemData and items.py needs ItemData and the trap_list
+@dataclass
+class ItemData:
+    code: int
+    """The Archipelago code for this item."""
+
+    name: str
+    """The Archipelago name for this item."""
+
+    category: ItemCategory
+    """The category that this item is part of."""
+
+    item_type: APItemType
+    """TODO"""
+
+    classification: ItemClassification = ItemClassification.filler
+    """How important this item is to the game progression."""
+
+    version: DS2Version | None = None
+    """The version that this item is part of."""
+
+    skip: bool = False
+    """Whether to omit this item from randomization and replace it with other items."""
+
+    exclude: bool = False
+    """This item exists in the original game but is excluded from the multiworld item pool."""
+    # TODO explain why this is needed instead of just removing the item aka cause the item is still in the location name
+
+    bundle: bool = False
+    """
+    Whether this item comes in a quantity greater than one.
+    
+    The item's quantity is added to its code. For example, an item with 
+    code 1000 and a quantity of 5 would be represented as 1005.
+    """
+
+    max_reinforcement: int = 0
+    """The max reinforcement level for this item."""
+
+    reinforcement: int = 0
+    """The reinforcement level for this item."""
+    
+    def __post_init__(self):
+        if re.search(r' x\d+$', self.name):
+            self.bundle = True
+
+
+@dataclass
+class TrapData(ItemData):
+    category: ItemCategory = ItemCategory.TRAP
+    """The category that this item is part of."""
+
+    classification: ItemClassification = ItemClassification.trap
+    """How important this item is to the game progression."""
+
+    item_type: APItemType = APItemType.TRAP
+    """Item type identifier."""
+    
+    max_count: int = 100
+    """Maximum number of copies of this trap allowed in the pool."""

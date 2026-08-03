@@ -3,16 +3,17 @@ from typing import Any, Iterable, List, Mapping, TextIO
 
 from BaseClasses import (Item, ItemClassification, Location,
                          LocationProgressType, Region, Tutorial)
+from Options import Range
 from worlds.AutoWorld import WebWorld, World
 from worlds.generic.Rules import add_item_rule, add_rule, set_rule
 
 from .enums import DLC, APItemType, DS2Version, ItemCategory
 from .options import DarkSouls2Options, option_groups
 from .locations import LocationData, locations_by_region, regions_by_location, locations_to_keep_unrandomized, location_name_groups
-from .items import ItemData, item_dictionary, item_list, item_name_groups
+from .items import ItemData, item_dictionary, item_list, item_name_groups, trap_dictionary, trap_list
 from .regions import region_dictionary, region_list
 from .rules import connection_rules, location_rules, combat_logic_easy, combat_logic_medium, combat_logic_hard
-
+from .traps import TRAP_PRESETS
 
 class DS2Location(Location):
     game: str = "Dark Souls II"
@@ -75,6 +76,7 @@ class DarkSouls2World(World):
         for item_data in item_list
         if not item_data.exclude
     }
+    item_name_to_id.update({trap_data.name: trap_data.code for trap_data in trap_list})
 
     location_name_to_id = {
         location_data.name: location_data.address
@@ -112,6 +114,23 @@ class DarkSouls2World(World):
             for location in self.location_name_to_id.keys():
                 if location not in self.options.include_locations:
                     self.options.exclude_locations.value.add(location)
+        
+        for trap_data in trap_list:
+            option_value = self.options.get_trap_range_value(trap_data.name)
+            if option_value and option_value > 0:
+                # manually set by user, adjust for max_count (adjusted by available locations later)
+                count = min(option_value, trap_data.max_count)
+                self.options.set_trap_range_value(trap_data.name, count)
+                pass
+            else:
+                preset_selection = self.options.trap_preset.current_key
+                preset_value = TRAP_PRESETS.get(preset_selection, {}).get(trap_data.name)
+                if preset_value and preset_value > 0:
+                    count = min(preset_value, trap_data.max_count)
+                    self.options.set_trap_range_value(trap_data.name, count)
+                else:
+                    self.options.set_trap_range_value(trap_data.name, 0)
+
 
     def create_regions(self) -> None:
         region_lookup: dict[str, Region] = {}
@@ -219,8 +238,19 @@ class DarkSouls2World(World):
             item_pool.append(self.create_item(item_name))
             items_added.append(item_name)
 
+        remaining = max_pool_size - len(item_pool)
+
+        # Use traps before filler items
+        for trap_data in trap_list:
+            option_value = self.options.get_trap_range_value(trap_data.name)
+            if option_value:
+                count = min(option_value, trap_data.max_count, remaining)
+                for _ in range(count):
+                    item_pool.append(self.create_item(trap_data.name))
+                    remaining -= 1
+
         # Fill remaining slots with filler items
-        for _ in range(max_pool_size - len(item_pool)):
+        for _ in range(remaining):
             item_pool.append(self.create_item(self.get_filler_item_name()))
 
         assert len(item_pool) == max_pool_size
@@ -296,6 +326,10 @@ class DarkSouls2World(World):
 
 
     def create_item(self, name: str) -> DS2Item:
+        if name in trap_dictionary:
+            trap_data = trap_dictionary[name]
+            return DS2Item(name, trap_data.classification, trap_data.code, self.player, trap_data)
+
         item_data: ItemData = item_dictionary[name]
 
         if item_data.max_reinforcement > 0 and self.random.randint(0, 99) < self.options.randomize_equipment_level_percentage:
@@ -394,5 +428,25 @@ class DarkSouls2World(World):
             }
             for item in item_list
         ]
+
+        for trap in trap_list:
+            option_value = self.options.get_trap_range_value(trap.name)
+            if option_value and option_value > 0:
+                slot_data["item_data"].append({
+                    "item_id": trap.code,
+                    "item_type": trap.item_type.value,
+                    "is_bundle": trap.bundle,
+                    "reinforcement": trap.reinforcement
+                })
+                
+        slot_data["death_link"] = self.options.death_link.value
+        slot_data["random_trap_carving"] = self.options.random_trap_carving.value
+        slot_data["random_death_carving"] = self.options.random_death_carving.value
+        slot_data["ds2_shared_traps"] = self.options.ds2_shared_traps.value
+        slot_data["trap_link"] = self.options.trap_link.value
+        slot_data["trap_data"] = {
+                trap.code: self.options.get_trap_range_value(trap.name) or 0
+                for trap in trap_list
+        }
 
         return slot_data
