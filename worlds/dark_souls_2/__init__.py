@@ -1,4 +1,5 @@
 from collections import defaultdict
+from dataclasses import replace
 from typing import Any, Iterable, List, Mapping, TextIO
 
 from BaseClasses import (Item, ItemClassification, Location,
@@ -85,6 +86,11 @@ class DarkSouls2World(World):
 
     item_name_groups = item_name_groups
     location_name_groups = location_name_groups
+
+    def __init__(self, multiworld, player):
+        super().__init__(multiworld, player)
+        self._item_list = [replace(item) for item in item_list]
+        self._item_dictionary = {item.name: item for item in self._item_list}
 
     def _is_dlc_enabled(self, dlc: DLC) -> bool:
         if dlc == DLC.SUNKEN_KING and not self.options.sunken_king_dlc:
@@ -296,7 +302,7 @@ class DarkSouls2World(World):
 
 
     def create_item(self, name: str) -> DS2Item:
-        item_data: ItemData = item_dictionary[name]
+        item_data: ItemData = self._item_dictionary[name]
 
         if item_data.max_reinforcement > 0 and self.random.randint(0, 99) < self.options.randomize_equipment_level_percentage:
             if item_data.max_reinforcement == 5:
@@ -319,16 +325,24 @@ class DarkSouls2World(World):
 
         return DS2Item(name, item_classification, item_data.code, self.player, item_data)
 
-    def get_filler_item_name(self) -> str:
-        filler_items = {
-            item.name for item in item_list
+    def _build_filler_item_candidates(self, items: Iterable[ItemData]) -> tuple[str, ...]:
+        candidates = tuple(sorted({
+            item.name for item in items
             if item.category != ItemCategory.UNIQUE
             and item.classification == ItemClassification.filler
             and not item.skip
             and not item.exclude
-            and not item.version == DS2Version.SOTFS
-        }
-        return self.random.choice(tuple(filler_items))
+            and self._is_version_selected(item.version)
+        }))
+        if not candidates:
+            raise RuntimeError(
+                f"No eligible Dark Souls II filler items for game version "
+                f"'{self.options.game_version.current_key}'."
+            )
+        return candidates
+
+    def get_filler_item_name(self) -> str:
+        return self.random.choice(self._build_filler_item_candidates(item_list))
 
     def write_spoiler(self, spoiler_handle: TextIO) -> None:
         if len(self.options.include_locations.value) > 0:
@@ -354,7 +368,7 @@ class DarkSouls2World(World):
             "combat_logic"
         )
 
-        keep_unrandomized = locations_to_keep_unrandomized
+        keep_unrandomized = set(locations_to_keep_unrandomized)
         if self.options.infinite_lifegems:
             keep_unrandomized.add(375400601)
 
@@ -392,7 +406,7 @@ class DarkSouls2World(World):
                 "is_bundle": item.bundle,
                 "reinforcement": item.reinforcement
             }
-            for item in item_list
+            for item in self._item_list
         ]
 
         return slot_data
